@@ -1,0 +1,2 @@
+"ThirdParty\NAnt\bin\nant.exe" -D:Configuration=Release -D:Platform="x86" -buildfile:NDepth.build Setup
+"ThirdParty\NAnt\bin\nant.exe" -D:Configuration=Release -D:Platform="x64" -buildfile:NDepth.build Setup

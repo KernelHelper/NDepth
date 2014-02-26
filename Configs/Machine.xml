@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Machine>
+  <Name>Local</Name>
+  <Description>Local machine</Description>
+  <Address>localhost</Address>
+  <ConnectionString>Data Source=localhost;Initial Catalog=NDepth;Integrated Security=True</ConnectionString>
+  <ConnectionType>SqlServer</ConnectionType>
+  <Logging>
+    <LoggingType>log4net</LoggingType>
+    <LoggingConfig>
+      <configType>FILE-WATCH</configType>
+      <configFile>~/log4net.config</configFile>
+    </LoggingConfig>
+  </Logging>
+</Machine>

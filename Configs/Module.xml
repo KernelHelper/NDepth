@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Module>
+  <Name>Module</Name>
+  <Description>Local module</Description>
+  <Version>1.0.0.0</Version>
+  <ConnectionString></ConnectionString>
+  <ConnectionType></ConnectionType>
+  <Logging>
+    <LoggingType>log4net</LoggingType>
+    <LoggingConfig>
+      <configType>FILE-WATCH</configType>
+      <configFile>~/log4net.config</configFile>
+    </LoggingConfig>
+  </Logging>
+</Module>

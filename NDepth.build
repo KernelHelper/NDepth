@@ -1,0 +1,155 @@
+<project name="NDepth" default="help">
+
+  <include buildfile="NDepth.config" />
+
+  <target name="help">
+    <echo message="Use: nant.exe -D:Build=1.0.0.0 -D:Configuration=[Release|Debug] -D:Platform=[Any CPU|x86|x64] -D:SetupFileDir=C:\Setup\ -buildfile:NDepth.build [Build|Rebuild|Clean|Setup|Tests]"/>
+  </target>
+
+  <target name="Build" >
+    <property name="Build.Target" value="Build" />
+    <property name="Build.Configuration" value="${Configuration}" />
+    <property name="Build.Platform" value="${Platform}" />
+    <property name="Build.SourcesDir" value="${SourcesDir}" />
+    <property name="Build.SolutionFile" value="${SolutionFile}" />
+    <call target="GenAsmInfo" />
+    <call target="BuildSolution" />
+  </target>
+
+  <target name="Rebuild" >
+    <property name="Build.Target" value="Rebuild" />
+    <property name="Build.Configuration" value="${Configuration}" />
+    <property name="Build.Platform" value="${Platform}" />
+    <property name="Build.SourcesDir" value="${SourcesDir}" />
+    <property name="Build.SolutionFile" value="${SolutionFile}" />
+    <call target="GenAsmInfo" />
+    <call target="BuildSolution" />
+  </target>
+
+  <target name="Clean" >
+    <property name="Build.Target" value="Clean" />
+    <property name="Build.Configuration" value="${Configuration}" />
+    <property name="Build.Platform" value="${Platform}" />
+    <property name="Build.SourcesDir" value="${SourcesDir}" />
+    <property name="Build.SolutionFile" value="${SolutionFile}" />
+    <call target="BuildSolution" />
+    <delete>
+      <fileset>
+        <include name="${SourcesDir}NDepth*.suo" />
+        <include name="${SourcesDir}NDepth.build-*-*.log" />
+        <include name="${SourcesDir}NDepth.sln*.user" />
+        <include name="${SourcesDir}Examples\*\*\bin\**" />
+        <include name="${SourcesDir}Examples\*\*\obj\**" />
+        <include name="${SourcesDir}Packages\**" />
+        <exclude name="${SourcesDir}Packages\Packages.txt" />
+        <include name="${SourcesDir}Setup\NDepth*.exe" />
+        <include name="${SourcesDir}Sources\Business\*\bin\**" />
+        <include name="${SourcesDir}Sources\Business\*\obj\**" />
+        <include name="${SourcesDir}Sources\Cluster\*\bin\**" />
+        <include name="${SourcesDir}Sources\Cluster\*\obj\**" />
+        <include name="${SourcesDir}Sources\Common\*\bin\**" />
+        <include name="${SourcesDir}Sources\Common\*\obj\**" />
+        <include name="${SourcesDir}Sources\Configuration\*\bin\**" />
+        <include name="${SourcesDir}Sources\Configuration\*\obj\**" />
+        <include name="${SourcesDir}Sources\Database\*\bin\**" />
+        <include name="${SourcesDir}Sources\Database\*\obj\**" />
+        <include name="${SourcesDir}Sources\Module\*\bin\**" />
+        <include name="${SourcesDir}Sources\Module\*\obj\**" />
+        <include name="${SourcesDir}Sources\Monitoring\*\bin\**" />
+        <include name="${SourcesDir}Sources\Monitoring\*\obj\**" />
+        <include name="${SourcesDir}Sources\Utilities\*\bin\**" />
+        <include name="${SourcesDir}Sources\Utilities\*\obj\**" />
+        <include name="${SourcesDir}Sources\Utilities\*\*\bin\**" />
+        <include name="${SourcesDir}Sources\Utilities\*\*\obj\**" />
+        <include name="${SourcesDir}Tests\*\*\bin\**" />
+        <include name="${SourcesDir}Tests\*\*\obj\**" />
+        <include name="${SourcesDir}ThirdParty\Log4NetEx\bin\**" />
+        <include name="${SourcesDir}ThirdParty\Log4NetEx\obj\**" />
+        <include name="${SourcesDir}ThirdParty\Log4NetEx\Packages\**" />
+        <exclude name="${SourcesDir}ThirdParty\Log4NetEx\Packages\Packages.txt" />
+        <include name="${SourcesDir}ThirdParty\NUnitEx\bin\**" />
+        <include name="${SourcesDir}ThirdParty\NUnitEx\obj\**" />
+        <include name="${SourcesDir}ThirdParty\NUnitEx\Packages\**" />
+        <exclude name="${SourcesDir}ThirdParty\NUnitEx\Packages\Packages.txt" />
+      </fileset>
+    </delete>
+    <delete dir="${SourcesDir}_ReSharper.NDepth" />
+  </target>
+
+  <target name="Tests" depends="Build" >
+    <nunit2>
+      <formatter type="Plain" />
+      <test assemblyname="${SourcesDir}\Tests\Configuration\ConfigurationManagerTests\bin\${Configuration}\NDepth.Tests.Configuration.ConfigurationManagerTests.dll" />
+      <test assemblyname="${SourcesDir}\Tests\Module\ModuleTests\bin\${Configuration}\NDepth.Tests.Module.ModuleTests.dll" />
+      <test assemblyname="${SourcesDir}\Tests\Module\ModuleWithDBTests\bin\${Configuration}\NDepth.Tests.Module.ModuleWithDBTests.dll" />
+      <test assemblyname="${SourcesDir}\Tests\Monitoring\MonitoringStateTests\bin\${Configuration}\NDepth.Tests.Monitoring.MonitoringStateTests.dll" />
+      <test assemblyname="${SourcesDir}\Tests\UnitTests\NUnitTests\bin\${Configuration}\NDepth.Tests.UnitTests.NUnitTests.dll" />
+      <test assemblyname="${SourcesDir}\Tests\UnitTests\MoqTests\bin\${Configuration}\NDepth.Tests.UnitTests.MoqTests.dll" />
+      <test assemblyname="${SourcesDir}\Tests\UnitTests\NSubstituteTests\bin\${Configuration}\NDepth.Tests.UnitTests.NSubstituteTests.dll" />
+      <test assemblyname="${SourcesDir}\Tests\UnitTests\RhinoMocksTests\bin\${Configuration}\NDepth.Tests.UnitTests.RhinoMocksTests.dll" />
+    </nunit2>
+  </target>
+
+  <target name="Setup" depends="Build" >
+    <property name="Setup.Build" value="${Build}" />
+    <property name="Setup.Configuration" value="${Configuration}" />
+    <property name="Setup.Platform" value="${Platform}" />
+    <property name="Setup.SetupFileName" value="${SetupFileDir}${SetupFileNamePrefix}.${Build}.${Platform}.${Configuration}.exe" />
+    <property name="Setup.SetupSourceFile" value="${Build.SourcesDir}Setup\NDepth.Setup.nsi" />
+    <call target="RunSetup" />
+  </target>
+
+  <target name="BuildSolution" >
+    <property name="MSBuild.SourcesDir" value="${Build.SourcesDir}" />
+    <property name="MSBuild.SolutionFile" value="${Build.SourcesDir}${Build.SolutionFile}" />
+    <property name="MSBuild.Target" value="${Build.Target}" />
+    <property name="MSBuild.Output" value="${Build.SourcesDir}NDepth.build-${Build.Platform}-${Build.Configuration}.log" />
+    <property name="MSBuild.Configuration" value="${Build.Configuration}" />
+    <property name="MSBuild.Platform" value="${Build.Platform}" />
+    <call target="RunMSBuild" />
+  </target>
+
+  <target name="GenAsmInfo">
+    <asminfo output="Version\GlobalAssemblyInfo.cs" language="CSharp">
+      <imports>
+        <import namespace="System.Reflection" />
+      </imports>
+      <attributes>
+        <attribute type="AssemblyConfigurationAttribute" value="" />
+        <attribute type="AssemblyCompanyAttribute" value="Ivan Shynkarenka" />
+        <attribute type="AssemblyProductAttribute" value="NDepth Framework" />
+        <attribute type="AssemblyCopyrightAttribute" value="Copyright &#169; Ivan Shynkarenka 2012-${datetime::get-year(datetime::now())}" />
+        <attribute type="AssemblyTrademarkAttribute" value="" />
+        <attribute type="AssemblyCultureAttribute" value="" />
+        <attribute type="AssemblyVersionAttribute" value="${Build}" />
+        <attribute type="AssemblyFileVersionAttribute" value="${Build}" />
+      </attributes>
+    </asminfo>
+  </target>
+
+  <target name="RunMSBuild">
+    <exec program="${FrameworkDir}msbuild.exe">
+      <arg value="/target:${MSBuild.Target}" />
+      <arg value="/maxcpucount" />
+      <arg value="/fl" />
+      <arg value="/flp:Verbosity=Normal;LogFile=${MSBuild.Output}" />
+      <arg value="/clp:NoItemAndPropertyList" />
+      <arg value="/verbosity:n" />
+      <arg value="/nologo" />
+      <arg value="/p:Configuration=${MSBuild.Configuration}" />
+      <arg value="/p:Platform=${MSBuild.Platform}" />
+      <arg value="${MSBuild.SolutionFile}" />
+    </exec>
+  </target>
+
+  <target name="RunSetup" >
+    <exec program="${NSISDir}makensis.exe">
+      <arg value="/DBUILD=${Setup.Build}" />
+      <arg value="/DCONFIGURATION=${Setup.Configuration}" />
+      <arg value="/DPLATFORM=${Setup.Platform}" />
+      <arg value="/DSETUP_FILENAME=${Setup.SetupFileName}" />
+      <arg value="${Setup.SetupSourceFile}" />
+    </exec>
+  </target>
+
+</project>

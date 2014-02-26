@@ -1,0 +1,1 @@
+"ThirdParty\NAnt\bin\nant.exe" -buildfile:NDepth.build Clean

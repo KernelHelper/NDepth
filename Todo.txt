@@ -1,0 +1,19 @@
+Cluster
+	- How it works:
+		- Init logging
+		- Init DB connect
+		- Load configuration
+		- Check and update machine, module in current configuration if they are missed or different
+		- In case of update configuration of machine, module should be handled and corresponding machine.xml, module.xml should be updated
+
+Configuration
+	- Make DBMonitoringStorage.BufferCacheSize configurable
+	- Add configuration for modules
+	- Read logging level from config
+        - Read module monitoring storage config (NullMonitoringStorage, LoggerMonitoringStorage, MonitoringDBStorage, MonitoringMongoDBStorage)
+        - Use only log4net. Setup logging from module config. 
+
+Monitoring
+	- DBMonitoringNotify
+	- Notifications with triggers
+	- Notification implementation (simple, email, sms)

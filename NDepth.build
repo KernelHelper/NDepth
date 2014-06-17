@@ -128,7 +128,7 @@
   </target>
 
   <target name="RunMSBuild">
-    <exec program="${FrameworkDir}msbuild.exe">
+    <exec program="${MSBuildDir}msbuild.exe">
       <arg value="/target:${MSBuild.Target}" />
       <arg value="/maxcpucount" />
       <arg value="/fl" />

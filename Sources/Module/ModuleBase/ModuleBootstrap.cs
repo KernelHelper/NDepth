@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -12,6 +11,7 @@ using NDepth.Database.Hibernate;
 using NDepth.Monitoring;
 using NDepth.Monitoring.Hibernate;
 using NDepth.Monitoring.Logger;
+using Common.Logging.Configuration;
 
 namespace NDepth.Module
 {

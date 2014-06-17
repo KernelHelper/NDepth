@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Specialized;
 using Common.Logging;
+using Common.Logging.Configuration;
 using Common.Logging.NLog;
 
 namespace NDepth.Examples.Logging.NLog

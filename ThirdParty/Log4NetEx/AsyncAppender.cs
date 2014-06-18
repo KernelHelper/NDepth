@@ -107,6 +107,10 @@ namespace log4net.Async
             // Stop the previous asynchronous processing.
             if (_asyncStrategy != null)
             {
+                // Append footer.
+                if (!string.IsNullOrEmpty(_asyncLayout.Footer))
+                    _asyncStrategy.AddItem(_asyncLayout.Footer + Environment.NewLine);
+
                 _asyncStrategy.StopProcessing();
                 _asyncStrategy.Dispose();
                 _asyncStrategy = null;
@@ -181,6 +185,10 @@ namespace log4net.Async
             _asyncStrategy.HandleItem += loggingMessage => Appender.DoAppend(loggingMessage);
             _asyncStrategy.HandleOverflow += bufferLimit => ErrorHandler.Error(string.Format(Resources.Strings.AsyncQueueOverflow, bufferLimit));
             _asyncStrategy.StartProcessing();
+
+            // Append header.
+            if (!string.IsNullOrEmpty(_asyncLayout.Header))
+                _asyncStrategy.AddItem(_asyncLayout.Header + Environment.NewLine);
         }
 
         #endregion

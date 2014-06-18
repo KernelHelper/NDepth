@@ -4,6 +4,8 @@
 //
 //Copyright (C) Microsoft Corporation.  All rights reserved.
 
+// ReSharper disable CanBeReplacedWithTryCastAndCheckForNull
+
 using System;
 using System.IO;
 using System.Collections;
@@ -170,3 +172,5 @@ namespace NDepth.Examples.Common.LINQToObjectsExamples
         }
     }
 }
+
+// ReSharper restore CanBeReplacedWithTryCastAndCheckForNull

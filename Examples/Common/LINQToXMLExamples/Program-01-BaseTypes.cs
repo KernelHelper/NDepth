@@ -90,11 +90,12 @@ namespace NDepth.Examples.Common.LINQToXMLExamples
                         new XElement("Book",
                             new XElement("Title", "Midieval Tools and Implements"),
                             new XElement("Author", "Gazit, Inbar"))),
-                    new XComment("This is another comment."));
+                    new XComment("This is another comment."))
+                    {
+                        // Setup XML declaration for the document.
+                        Declaration = new XDeclaration("1.0", "utf-8", "true")
+                    };
             
-            // Setup XML declaration for the document.
-            books.Declaration = new XDeclaration("1.0", "utf-8", "true");
-
             // Save XML document to file.
             books.Save("books.xml");
 

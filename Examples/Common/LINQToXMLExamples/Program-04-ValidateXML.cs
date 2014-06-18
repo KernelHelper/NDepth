@@ -38,9 +38,11 @@ namespace NDepth.Examples.Common.LINQToXMLExamples
             bool errors;
 
             // Create XML reader settings.
-            var xmlReaderSettings = new XmlReaderSettings();
-            xmlReaderSettings.DtdProcessing = DtdProcessing.Parse;
-            xmlReaderSettings.ValidationType = ValidationType.DTD;
+            var xmlReaderSettings = new XmlReaderSettings
+            {
+                DtdProcessing = DtdProcessing.Parse,
+                ValidationType = ValidationType.DTD
+            };
             xmlReaderSettings.ValidationEventHandler += (sender, args) =>
             {
                 Console.WriteLine("Validation Error: {0}", args.Message);

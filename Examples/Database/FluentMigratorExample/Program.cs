@@ -15,8 +15,7 @@ namespace NDepth.Examples.Database.FluentMigratorExample
         static void Main()
         {
             // Create migration announcer.
-            var announcer = new TextWriterAnnouncer(Console.WriteLine);
-            announcer.ShowSql = true;
+            var announcer = new TextWriterAnnouncer(Console.WriteLine) { ShowSql = true };
 
             // Create migration context.
             var migrationContext = new RunnerContext(announcer);

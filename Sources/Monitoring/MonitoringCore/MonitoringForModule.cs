@@ -181,8 +181,7 @@ namespace NDepth.Monitoring.Core
                     _monitoringQueue.AddItem(item);
 
                     // Create clone monitoring item and setup its parameters.
-                    var clone = new MonitoringItem(item);
-                    clone.Timespan = timespan;
+                    var clone = new MonitoringItem(item) { Timespan = timespan };
 
                     // Create delayed task to check monitoring cache.
                     Task.Delay(timespan, _monitoringCancellationTokenSource.Token).ContinueWith(task => RegisterCacheToQueue(clone), _monitoringCancellationTokenSource.Token);

@@ -120,10 +120,11 @@ namespace NDepth.Examples.Common.HotSwapExample
                         var index = (int)state;
                         for (var i = 0; i < _countPerThread; i++)
                         {
-                            var value = new ValueEntry();
-
-                            value.Index = index * _countPerThread + i;
-                            value.Value = stopWatchTotal.ElapsedTicks;
+                            var value = new ValueEntry
+                            {
+                                Index = index * _countPerThread + i,
+                                Value = stopWatchTotal.ElapsedTicks
+                            };
 
                             // Console.WriteLine(Resources.Strings.ProduceMessage, value.Index, index);
 

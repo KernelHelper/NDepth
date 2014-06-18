@@ -76,6 +76,7 @@
     <Compile Include="..\..\Version\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Appender\AsyncFileAppender.cs" />
     <Compile Include="Appender\AsyncNullAppender.cs" />
     <Compile Include="Appender\AsyncWrapperAppender.cs" />
     <Compile Include="Appender\IAsyncAppender.cs" />

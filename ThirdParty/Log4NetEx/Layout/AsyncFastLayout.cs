@@ -274,7 +274,23 @@ namespace log4net.Async.Layout
 
         private string FormatLevel(Level level)
         {
-            return level.DisplayName.PadLeft(5);
+            switch (level.Value)
+            {
+                case 20000:
+                    return "TRACE";
+                case 30000:
+                    return "DEBUG";
+                case 40000:
+                    return " INFO";
+                case 60000:
+                    return " WARN";
+                case 70000:
+                    return "ERROR";
+                case 110000:
+                    return "FATAL";
+                default:
+                    return "  ???";
+            }
         }
 
         private void FormatInt99(StringBuilder builder, int value)

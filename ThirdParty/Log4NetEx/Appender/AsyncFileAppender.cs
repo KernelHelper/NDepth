@@ -30,6 +30,7 @@ namespace log4net.Async.Appender
         public AsyncFileAppender()
         {
             AppendToFile = true;
+            ImmediateFlush = true;
         }
 
         #endregion
@@ -76,6 +77,31 @@ namespace log4net.Async.Appender
         public bool AppendToFile { get; set; }
 
         /// <summary>
+        /// Gets or set whether the appender will flush at the end 
+        /// of each append operation.
+        /// </summary>
+        /// <value>
+        /// <para>
+        /// The default behavior is to flush at the end of each 
+        /// append operation.
+        /// </para>
+        /// <para>
+        /// If this option is set to <c>false</c>, then the underlying 
+        /// stream can defer persisting the logging event to a later 
+        /// time.
+        /// </para>
+        /// </value>
+        /// <remarks>
+        /// Avoiding the flush operation at the end of each append results in
+        /// a performance gain of 10 to 20 percent. However, there is safety
+        /// trade-off involved in skipping flushing. Indeed, when flushing is
+        /// skipped, then it is likely that the last few log events will not
+        /// be recorded on disk when the application exits. This is a high
+        /// price to pay even for a 20% performance gain.
+        /// </remarks>
+        public bool ImmediateFlush { get; set; }
+
+        /// <summary>
         /// Log the logging message in Appender specific way.
         /// </summary>
         /// <param name="loggingMessage">The message to log</param>
@@ -101,6 +127,8 @@ namespace log4net.Async.Appender
             try
             {
                 _fileStream.Write(Encoding.UTF8.GetBytes(loggingMessage), 0, Encoding.UTF8.GetByteCount(loggingMessage));
+                if (ImmediateFlush)
+                    _fileStream.Flush();
             }
             catch (Exception ex)
             {
